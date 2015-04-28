@@ -1,0 +1,13 @@
+---
+- pacman: name=docker state=present
+  sudo: yes
+
+- command: gpasswd -a {{ user }} docker
+  sudo: yes
+
+#- command: newgrp docker
+
+- command: systemctl enable docker
+  sudo: yes
+
+#- pacman: name=sshfs state=present

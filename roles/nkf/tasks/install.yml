@@ -1,0 +1,26 @@
+---
+- file: path="{{ nkf_src_dir }}" state=directory
+- file: path="{{ nkf_src_dir }}/nkf" state=directory
+
+- command: chdir="{{ nkf_src_dir }}"
+           creates=nkf-2.1.3.tar.gz
+           wget {{ url }}
+
+- command: chdir="{{ nkf_src_dir }}"
+           creates=nkf-2.1.3
+           tar xzf nkf-2.1.3.tar.gz
+
+- command: ls -l /usr/local/bin/nkf
+  ignore_errors: True
+  register: result
+
+- debug: msg="{{ result }}"
+
+- command: chdir="{{ nkf_src_dir }}/nkf-2.1.3"
+           make
+  when: result|failed
+
+- command: chdir="{{ nkf_src_dir }}/nkf-2.1.3"
+           make install
+  sudo: yes
+  when: result|failed

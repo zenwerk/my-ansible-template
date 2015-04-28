@@ -1,0 +1,19 @@
+config_files:
+  - .vimrc
+  - .zshrc
+  - .zshrc.local
+  - .tmux.conf
+  - .vim
+
+packages:
+  - zsh
+  - git
+  - tmux
+  - lsof
+  - vim-python3
+
+user: vagrant
+work_dir: /home/{{ user }}
+
+gopath_dir: _go
+gopath: "{{ work_dir }}/{{ gopath_dir }}"

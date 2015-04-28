@@ -1,0 +1,12 @@
+---
+- pacman: name=go state=present
+  sudo: yes
+
+- file: path="{{ gopath }}" state=directory
+
+- lineinfile: dest={{ workdir }}/.zshrc.local
+              line='export GOROOT=/usr/lib/go'
+- lineinfile: dest={{ workdir }}/.zshrc.local
+              line='export GOPATH={{ gopath }}'
+- lineinfile: dest={{ workdir }}/.zshrc.local
+              line='export PATH=$PATH:$GOROOT/bin:$GOPATH/bin'

@@ -1,0 +1,3 @@
+url: http://jaist.dl.sourceforge.jp/nkf/59912/nkf-2.1.3.tar.gz
+
+nkf_src_dir: /home/{{ user }}/workdir/nkf

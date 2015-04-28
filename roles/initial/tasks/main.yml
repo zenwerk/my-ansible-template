@@ -1,0 +1,7 @@
+- include: install.yml
+
+- include: myconfig.yml
+
+- include: docker.yml
+
+- include: golang.yml

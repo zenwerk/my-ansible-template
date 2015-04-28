@@ -1,0 +1,29 @@
+---
+# 設定ファイルコピー
+- command: chdir={{ workdir }}
+           creates=dotfiles
+           git clone https://github.com/zenwerk/dotfiles.git
+
+- command: chdir={{ workdir}}/dotfiles
+           creates="{{ workdir }}/{{ item}}"
+           cp -r {{ item }} {{ workdir }}/{{ item }}
+  with_items: config_files
+
+# vim関連
+- name: install neobundle.vim
+  command: chdir={{ workdir }}/.vim/bundle/
+           creates={{ workdir }}/.vim/bundle/neobundle.vim
+           git clone https://github.com/Shougo/neobundle.vim.git
+- name: オリジナルの vi を vi_orig にリネーム
+  shell: mv $(which vi) $(which vi)_orig
+         creates=/usr/bin/vi_orig
+  sudo: yes
+- name: vi -> vim にシンボリックを貼る
+  command: ln -s vim vi
+           chdir=/usr/bin
+           creates=/usr/bin/vi
+  sudo: yes
+
+# zsh 関連
+- name: ログインシェルを bash から zsh へ
+  lineinfile: dest={{ workdir }}/.bash_profile line='exec $(which zsh) --login'
